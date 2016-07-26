@@ -15,6 +15,7 @@ module Tastable
       faraday_object = conn.get '/api/restaurants', {:zip => zipcode }
       # binding.pry
       hash = JSON.parse(faraday_object.body)
+      restaurants = hash["restaurants"]
       binding.pry
     end
   end
