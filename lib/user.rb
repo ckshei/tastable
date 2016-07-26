@@ -1,4 +1,5 @@
 # require "tastable/version"
+require_relative 'restaurants.rb'
 require 'faraday'
 require 'json'
 require 'pry'
@@ -6,11 +7,14 @@ require 'pry'
 module Tastable
   class User
 
-    attr_accessor :zipcode, :party_size, :nearby_restaurants
+    attr_accessor :zipcode, :party_size, :nearby_restaurants, :restaurant_objects
 
     def initialize(zipcode, party_size)
       @zipcode = zipcode
       @party_size = party_size
+      @restaurant_objects = []
+      self.get_nearby_restaurants
+      self.create_restaurant_objects
     end
 
     def get_nearby_restaurants
@@ -19,10 +23,21 @@ module Tastable
         faraday.response :logger                  # log requests to STDOUT
         faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
       end
-      faraday_object = conn.get '/api/restaurants', {:zip => self.zipcode }
+      faraday_object = conn.get '/api/restaurants', {:zip => self.zipcode, :per_page => 10}
       # binding.pry
       hash = JSON.parse(faraday_object.body)
       @nearby_restaurants = hash["restaurants"]
+    end
+
+    def create_restaurant_objects
+      puts "\nloading restaurants near you..."
+      @nearby_restaurants.each do |restaurant|
+        begin
+          @restaurant_objects << Restaurant.new(restaurant["mobile_reserve_url"])
+        rescue
+          next
+        end
+      end
     end
   end
 

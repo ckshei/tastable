@@ -2,14 +2,14 @@
 require 'pry'
 require 'nokogiri'
 require 'open-uri'
-
 class Restaurant
 
-  attr_accessor :link, :doc, :cuisine, :description, :res_times
+  attr_accessor :link, :cuisine, :description, :reservation_times
 
   def initialize(link)
-    @link = link
-    @doc = Nokogiri::HTML(open(link))
+    # binding.pry
+    @link = link.gsub(/http/, 'https') #necessary to prevent redirect forbidden error
+    doc = Nokogiri::HTML(open(@link))
     @cuisine = doc.css('div#ft').css('.dot-before').text
     @description = doc.css('div#DescriptionText').text
     @reservation_times = []
@@ -20,4 +20,4 @@ class Restaurant
 
 end
 
-binding.pry
+# binding.pry
