@@ -7,12 +7,12 @@ require 'pry'
 
 class Cli
 
-  attr_accessor :user
+  attr_accessor :user, :index
 
   def run
     puts "Welcome to Tastable - a cli that helps you make same day reservations at nearby restaurants"
 
-    puts "First, where are you located (enter your zipcode)"
+    puts "Where are you located? (enter your zipcode)"
 
     zip = gets.strip
 
@@ -22,11 +22,9 @@ class Cli
 
     @user = User.new(zip, party_size)
     
-    puts "Here are a list of nearby restaurants with reservations availabile today"
-    puts "Type in the index for more information on any specific restaurant (e.g. 1)"
+    puts "\nHere are a list of nearby restaurants with reservations availabile today"
+    puts "For more information, type in an index number (e.g. 1)"
     self.print_restaurant_objects
-
-    puts "Type 'res' to make a reservation, 'more' for more reservation times, and 'back' to go back"
   end
 
   def print_restaurant_objects
@@ -37,16 +35,22 @@ class Cli
   end
 
   def more_info
-    index = gets.to_i - 1
-    @user.restaurant_objects[index].get_more_info
-    puts "Type res to make a reservation, back to go back, and more for more reservation times"
-    action(index)
+    @index = gets.to_i - 1
+    if @index.between?(0,user.restaurant_objects.length-1)
+      @user.restaurant_objects[index].get_more_info
+      puts "Type res to make a reservation, back to go back, and more for more reservation times"
+      action
+    else
+      puts "\nInvalid entry - please try again:"
+      puts "For more information, type in an index number (e.g. 1)"
+      self.print_restaurant_objects
+    end
   end
 
-  def action(index)
+  def action
       action = gets.strip
     if action == "res"
-      puts @user.restaurant_objects[index].link
+      self.res
     elsif action == "back"
       self.print_restaurant_objects
     elsif action == "more"
@@ -56,6 +60,10 @@ class Cli
       puts "Type res to make a reservation, back to go back, and more for more reservation times"
       self.action(index)
     end
+  end
+
+  def res
+    puts @user.restaurant_objects[@index].make_reservation
   end
       
 
