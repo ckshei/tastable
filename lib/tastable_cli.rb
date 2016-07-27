@@ -9,27 +9,37 @@ class Cli
 
   attr_accessor :user, :index
 
-  def run
+  def intro
     puts "Welcome to Tastable - a cli that helps you make same day reservations at nearby restaurants"
 
     sleep(1)
+    self.run
+  end
 
+  def run
     puts "Where are you located? (enter your zipcode)"
 
     zip = gets.strip
 
-    puts "\nHow many in your party? (enter 1-6)"
+    puts "\nHow many in your party? (Recommended: 1-6)"
 
     party_size = gets.strip
 
     @user = User.new(zip, party_size)
-    
-    puts "\nHere are a list of nearby restaurants with reservations availabile today."
-    puts "For more information, type in an index number (e.g. 1)"
-    self.print_restaurant_objects
+
+    if @user.restaurant_objects.count == 0
+      puts "\nLooks like there are no restaurants with available reservations near you. Try inputting a different zip code or party size."
+      
+      sleep(2)
+      self.run
+    else
+      self.print_restaurant_objects
+    end
   end
 
   def print_restaurant_objects
+    puts "\nHere are a list of nearby restaurants with reservations availabile today."
+    puts "For more information, type in an index number (e.g. 1)"
     @user.restaurant_objects.each.with_index(1) do |res, i|
       puts "#{i}. #{res.name}"
     end
@@ -94,5 +104,5 @@ class Cli
 
 end
 
-Cli.new.run
+Cli.new.intro
 # binding.pry
