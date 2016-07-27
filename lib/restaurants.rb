@@ -4,10 +4,13 @@ require 'nokogiri'
 require 'open-uri'
 class Restaurant
 
-  attr_accessor :link, :cuisine, :description, :reservation_times, :reservation_today
+  attr_accessor :name, :address, :phone, :link, :cuisine, :description, :reservation_times
 
-  def initialize(link, party_size)
+  def initialize(name, address, phone, link, party_size)
     # binding.pry
+    @name = name
+    @address = address
+    @phone = phone
     @link = link.gsub(/http/, 'https') #necessary to prevent redirect forbidden error
     @link = @link << "&PartySize=#{party_size}"
     # binding.pry
@@ -19,15 +22,25 @@ class Restaurant
     doc.css('div.col-xs-12 div#restaurantAvailabilityResults div#ulSlots a span').each do |x|
       reservation_times << x.text
     end
-    if @reservation_times.length == 0 
-      @reservation_today = false
-    else
-      @reservations_today = true
-    end
   end
 
-  def get_next_reservation
-    self.reservation_times[0]
+  def get_more_info
+    puts "Name: #{name}"
+    puts "Cuisine: #{cuisine}"
+    puts "Description: #{description}"
+    puts "Next Reservation: #{self.reservation_times[0]}"
+    puts "Address: #{address}"
+    puts "Phone: #{phone}"
+  end
+
+  def more_reservation_times
+    puts "Here is a list of all available reservation times available today:"
+    self.reservation_times.do {|x| puts "x\n"}
+  end
+
+
+  def make_reservation
+    puts "Make a reservation here: #{link}"
   end
 
 end

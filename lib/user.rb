@@ -4,7 +4,7 @@ require 'faraday'
 require 'json'
 require 'pry'
 
-module Tastable
+# module Tastable
   class User
 
     attr_accessor :zipcode, :party_size, :nearby_restaurants, :restaurant_objects
@@ -23,7 +23,7 @@ module Tastable
         faraday.response :logger                  # log requests to STDOUT
         faraday.adapter  Faraday.default_adapter  # make requests with Net::HTTP
       end
-      faraday_object = conn.get '/api/restaurants', {:zip => self.zipcode, :per_page => 15}
+      faraday_object = conn.get '/api/restaurants', {:zip => self.zipcode, :per_page => 5}
       # binding.pry
       hash = JSON.parse(faraday_object.body)
       @nearby_restaurants = hash["restaurants"]
@@ -33,7 +33,7 @@ module Tastable
       puts "\nloading restaurants near you..."
       @nearby_restaurants.each do |restaurant|
         begin
-          new_restaurant = Restaurant.new(restaurant["mobile_reserve_url"], @party_size)
+          new_restaurant = Restaurant.new(restaurant["name"], restaurant["address"], restaurant["phone"], restaurant["mobile_reserve_url"], @party_size)
           if new_restaurant.reservation_times.length != 0
             @restaurant_objects << new_restaurant
           end
@@ -44,6 +44,7 @@ module Tastable
     end
   end
 
-end
-user1 = Tastable::User.new(11211,3)
-binding.pry
+# end
+
+# user1 = Tastable::User.new(11211,3)
+# binding.pry
