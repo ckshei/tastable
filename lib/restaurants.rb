@@ -28,14 +28,14 @@ class Restaurant
     puts "Name: #{name}"
     puts "Cuisine: #{cuisine}"
     puts "Description: #{description}"
-    puts "Next Reservation: #{self.reservation_times[0]}"
+    puts "Next Available Reservation: #{self.reservation_times[0]}"
     puts "Address: #{address}"
     puts "Phone: #{phone}"
   end
 
-  def more_reservation_times
-    puts "Here is a list of all available reservation times available today:"
-    self.reservation_times.do {|x| puts "x\n"}
+  def more_reservation_times(party_size)
+    puts "Here is a list of all available reservation times available today for a party of #{party_size}:"
+    self.reservation_times.each {|x| puts "#{x}\n"}
   end
 
 

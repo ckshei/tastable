@@ -26,21 +26,38 @@ class Cli
     puts "Type in the index for more information on any specific restaurant (e.g. 1)"
     self.print_restaurant_objects
 
-    index = gets.to_i
-    binding.pry
-    user.restaurant_objects[index].get_more_info
-    binding.pry
-
     puts "Type 'res' to make a reservation, 'more' for more reservation times, and 'back' to go back"
   end
 
   def print_restaurant_objects
     @user.restaurant_objects.each.with_index(1) do |res, i|
-      # binding.pry
       puts "#{i}. #{res.name}"
     end
-
+    self.more_info
   end
+
+  def more_info
+    index = gets.to_i - 1
+    @user.restaurant_objects[index].get_more_info
+    puts "Type res to make a reservation, back to go back, and more for more reservation times"
+    action(index)
+  end
+
+  def action(index)
+      action = gets.strip
+    if action == "res"
+      puts @user.restaurant_objects[index].link
+    elsif action == "back"
+      self.print_restaurant_objects
+    elsif action == "more"
+      @user.restaurant_objects[index].more_reservation_times(user.party_size)
+    else
+      puts "invalid entry - please try again"
+      puts "Type res to make a reservation, back to go back, and more for more reservation times"
+      self.action(index)
+    end
+  end
+      
 
 end
 
