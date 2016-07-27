@@ -40,7 +40,7 @@ class Restaurant
 
 
   def make_reservation
-    puts "Make a reservation here: #{link}"
+    puts "\nMake a reservation at #{self.name} here: #{link}"
   end
 
 end

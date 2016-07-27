@@ -54,7 +54,7 @@ class Cli
     elsif action == "back"
       self.print_restaurant_objects
     elsif action == "more"
-      @user.restaurant_objects[index].more_reservation_times(user.party_size)
+      self.more_reservations
     else
       puts "invalid entry - please try again"
       puts "Type res to make a reservation, back to go back, and more for more reservation times"
@@ -64,6 +64,25 @@ class Cli
 
   def res
     puts @user.restaurant_objects[@index].make_reservation
+  end
+
+  def more_reservations
+    @user.restaurant_objects[index].more_reservation_times(user.party_size)
+    self.second_action
+  end
+
+  def second_action
+    puts "Type res to make a reservation, and back to go back"
+    second_action = gets.strip
+    if second_action == 'res'
+      self.res
+    elsif second_action == 'back'
+      self.more_info
+    else
+      puts "\nInvalid entry - please try again"
+      # binding.pry
+      self.second_action
+    end
   end
       
 
