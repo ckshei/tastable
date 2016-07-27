@@ -25,7 +25,7 @@ class Restaurant
   end
 
   def get_more_info
-    puts "Name: #{name}"
+    puts "\nName: #{name}"
     puts "Cuisine: #{cuisine}"
     puts "Description: #{description}"
     puts "Next Available Reservation: #{self.reservation_times[0]}"
@@ -34,7 +34,7 @@ class Restaurant
   end
 
   def more_reservation_times(party_size)
-    puts "Here is a list of all available reservation times available today for a party of #{party_size}:"
+    puts "\nHere is a list of all available reservation times available today for a party of #{party_size}:"
     self.reservation_times.each {|x| puts "#{x}\n"}
   end
 

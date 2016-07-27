@@ -12,17 +12,19 @@ class Cli
   def run
     puts "Welcome to Tastable - a cli that helps you make same day reservations at nearby restaurants"
 
+    sleep(1)
+
     puts "Where are you located? (enter your zipcode)"
 
     zip = gets.strip
 
-    puts "How many in your party (enter 1-6)"
+    puts "\nHow many in your party? (enter 1-6)"
 
     party_size = gets.strip
 
     @user = User.new(zip, party_size)
     
-    puts "\nHere are a list of nearby restaurants with reservations availabile today"
+    puts "\nHere are a list of nearby restaurants with reservations availabile today."
     puts "For more information, type in an index number (e.g. 1)"
     self.print_restaurant_objects
   end
@@ -37,14 +39,18 @@ class Cli
   def more_info
     @index = gets.to_i - 1
     if @index.between?(0,user.restaurant_objects.length-1)
-      @user.restaurant_objects[index].get_more_info
-      puts "Type res to make a reservation, back to go back, and more for more reservation times"
-      action
+      self.print_info
     else
       puts "\nInvalid entry - please try again:"
       puts "For more information, type in an index number (e.g. 1)"
       self.print_restaurant_objects
     end
+  end
+
+  def print_info
+    @user.restaurant_objects[index].get_more_info
+    puts "\nType res to make a reservation, back to go back, and more for more reservation times:"
+    action
   end
 
   def action
@@ -57,7 +63,7 @@ class Cli
       self.more_reservations
     else
       puts "invalid entry - please try again"
-      puts "Type res to make a reservation, back to go back, and more for more reservation times"
+      puts "Type res to make a reservation, back to go back, and more for more reservation times:"
       self.action(index)
     end
   end
@@ -72,12 +78,12 @@ class Cli
   end
 
   def second_action
-    puts "Type res to make a reservation, and back to go back"
+    puts "\nType res to make a reservation, and back to go back:"
     second_action = gets.strip
     if second_action == 'res'
       self.res
     elsif second_action == 'back'
-      self.more_info
+      self.print_info
     else
       puts "\nInvalid entry - please try again"
       # binding.pry
