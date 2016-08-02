@@ -37,6 +37,7 @@ class Restaurant
 
   def make_reservation
     puts "\nMake a reservation at #{self.name} here: #{link}"
+    Launchy.open(link)
   end
 
 end
