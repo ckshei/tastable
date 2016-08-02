@@ -18,6 +18,7 @@ When you type res to make the reservation, it will return a link to the mobile r
 
 ## Misc: 
 Blog Post: http://www.shei.io/tastable-creating-my-first-ruby-gem/
+
 GitHub: https://github.com/ckshei/tastable
 
 ## Contributing
