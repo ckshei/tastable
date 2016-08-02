@@ -1,7 +1,3 @@
-# require "tastable/version"
-require 'pry'
-require 'nokogiri'
-require 'open-uri'
 class Restaurant
 
   attr_accessor :name, :address, :phone, :link, :cuisine, :description, :reservation_times
@@ -27,7 +23,7 @@ class Restaurant
   def get_more_info
     puts "\nName: #{name}"
     puts "Cuisine: #{cuisine}"
-    puts "Description: #{description}"
+    puts "#{description}"
     puts "Next Available Reservation: #{self.reservation_times[0]}"
     puts "Address: #{address}"
     puts "Phone: #{phone}"

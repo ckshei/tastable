@@ -1,10 +1,3 @@
-# require "tastable/version"
-require_relative 'restaurants.rb'
-require_relative 'user.rb'
-require 'faraday'
-require 'json'
-require 'pry'
-
 class Cli
 
   attr_accessor :user, :index
@@ -104,5 +97,5 @@ class Cli
 
 end
 
-Cli.new.intro
+
 # binding.pry

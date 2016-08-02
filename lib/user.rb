@@ -1,10 +1,3 @@
-# require "tastable/version"
-require_relative 'restaurants.rb'
-require 'faraday'
-require 'json'
-require 'pry'
-
-# module Tastable
   class User
 
     attr_accessor :zipcode, :party_size, :nearby_restaurants, :restaurant_objects
