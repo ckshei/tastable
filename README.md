@@ -10,11 +10,13 @@ Navigate to the tastable folder and run: bin/tictactoe
 
 Video Walk Through: https://www.youtube.com/watch?v=qeXAdCAyqpg
 
+Run bundle install to first download all the necessary gems. 
+
 To use the gem, first type in your zip code and party size. From there it should provide a few restaurants close by with open availability. 
 
 Sometimes no restaurants will be provided, in which case the gem will prompt you to try another zip code. 
 
-When you type res to make the reservation, it will return a link to the mobile reservation url of the restaurant you are interested in. From there, log into your OpenTable account and make the reservation.
+When you type res to make the reservation, it will open the reservation page of the restaurant you are interested in. From there, log into your OpenTable account and make the reservation.
 
 ## Misc: 
 Blog Post: http://www.shei.io/tastable-creating-my-first-ruby-gem/
