@@ -26,7 +26,8 @@
       puts "\nloading restaurants near you..."
       @nearby_restaurants.each do |restaurant|
         begin
-          new_restaurant = Restaurant.new(restaurant["name"], restaurant["address"], restaurant["phone"], restaurant["mobile_reserve_url"], @party_size)
+          restaurant_clean = {name: restaurant["name"], address: restaurant["address"], phone: restaurant["phone"], link: restaurant["mobile_reserve_url"]}
+          new_restaurant = Restaurant.new(restaurant_clean, @party_size)
           if new_restaurant.reservation_times.length != 0
             @restaurant_objects << new_restaurant
           end

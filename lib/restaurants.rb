@@ -2,11 +2,11 @@ class Restaurant
 
   attr_accessor :name, :address, :phone, :link, :cuisine, :description, :reservation_times
 
-  def initialize(name, address, phone, link, party_size)
+  def initialize(attributes, party_size)
+    attributes.each do |key, value|
+      self.send("#{key}=", value)
+    end
     # binding.pry
-    @name = name
-    @address = address
-    @phone = phone
     @link = link.gsub(/http/, 'https') #necessary to prevent redirect forbidden error
     @link = @link << "&PartySize=#{party_size}"
     # binding.pry
